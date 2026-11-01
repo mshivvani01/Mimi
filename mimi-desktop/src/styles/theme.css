@@ -1,0 +1,16 @@
+:root {
+  --cream: #fff8ee;
+  --cream-2: #fff1de;
+  --blush: #f9d3e1;
+  --blush-deep: #e8809f;
+  --lavender: #e4d9fa;
+  --lavender-deep: #8b6fd0;
+  --mint: #d3f1e3;
+  --mint-deep: #3f9f7b;
+  --blue: #d3ebf9;
+  --blue-deep: #4f93bd;
+  --ink: #3f3560;
+  --ink-soft: #6d6490;
+  --font: ui-rounded, 'Segoe UI Variable Display', 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  --shadow: 0 10px 30px -14px rgba(110, 80, 170, 0.35);
+}

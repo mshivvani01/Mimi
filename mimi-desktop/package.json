@@ -1,0 +1,76 @@
+{
+  "name": "mimi-desktop",
+  "productName": "Mimi",
+  "version": "0.1.0",
+  "description": "Mimi — Your Little Screen-Time Buddy (Phase 01: real screen-time monitoring)",
+  "author": "Pixel & Co",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "npm run build:electron && concurrently -k \"vite\" \"wait-on tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "build:electron": "tsc -p tsconfig.electron.json && node scripts/copy-migrations.mjs",
+    "build:renderer": "tsc --noEmit && vite build",
+    "build": "npm run build:renderer && npm run build:electron",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "test": "npm run test:renderer && npm run test:engine",
+    "start": "npm run build && electron .",
+    "package": "npm run build && electron-builder --win --x64",
+    "assets:mascot": "vite-node scripts/generate-mascot.tsx",
+    "test:renderer": "vitest run",
+    "test:engine": "tsx --test tests-engine/*.test.ts",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "koffi": "^2.10.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@testing-library/react": "^16.0.1",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "jsdom": "^25.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9",
+    "vitest": "^2.1.3",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "co.pixelandco.mimi",
+    "productName": "Mimi",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "asarUnpack": [
+      "**/node_modules/better-sqlite3/**",
+      "**/node_modules/koffi/**"
+    ]
+  }
+}
